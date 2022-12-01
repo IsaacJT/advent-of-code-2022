@@ -59,8 +59,7 @@ fn get_input(filename: &str) -> Vec<Vec<u32>> {
 }
 
 fn get_most_calories(elves: Vec<Vec<u32>>) -> (usize, u32) {
-    let mut highest_index: usize = 0;
-    let mut last_highest = 0;
+    let mut totals: Vec<(usize, u32)> = Vec::new();
 
     for (i, elf) in elves.iter().enumerate() {
         let mut total = 0;
@@ -69,11 +68,10 @@ fn get_most_calories(elves: Vec<Vec<u32>>) -> (usize, u32) {
             total += cal;
         }
 
-        if total > last_highest {
-            highest_index = i;
-            last_highest = total;
-        }
+        totals.push((i, total));
     }
 
-    (highest_index, last_highest)
+    totals.sort_by(|a, b| b.1.cmp(&a.1));
+
+    totals[0]
 }
